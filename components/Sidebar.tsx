@@ -1,5 +1,5 @@
 import React from 'react';
-import type { View } from '../types';
+import { Link, useLocation } from 'react-router-dom';
 import HomeIcon from './icons/HomeIcon';
 import InboxIcon from './icons/InboxIcon';
 import OrdersIcon from './icons/OrdersIcon';
@@ -9,12 +9,12 @@ import BotIcon from './icons/BotIcon';
 import LogoutIcon from './icons/LogoutIcon';
 
 interface SidebarProps {
-  currentView: View;
-  setCurrentView: (view: View) => void;
   onLogout: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, onLogout }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onLogout }) => {
+  const location = useLocation();
+
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: <HomeIcon /> },
     { id: 'inbox', label: 'Inbox', icon: <InboxIcon /> },
@@ -33,22 +33,26 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, onLogout
       </div>
       <nav className="flex-1 px-2 md:px-4 py-6">
         <ul>
-          {navItems.map((item) => (
-            <li key={item.id}>
-              <button
-                onClick={() => setCurrentView(item.id)}
-                className={`flex items-center w-full p-3 my-1 rounded-lg transition-all duration-200 group relative ${
-                  currentView === item.id
-                    ? 'bg-primary/10 text-primary font-semibold'
-                    : 'text-textSecondary hover:bg-white/5 hover:text-textPrimary'
-                }`}
-              >
-                <div className={`absolute left-0 top-0 h-full w-1 rounded-r-full bg-primary transition-transform duration-300 scale-y-0 group-hover:scale-y-100 ${currentView === item.id ? 'scale-y-100' : ''}`}></div>
-                {item.icon}
-                <span className="hidden md:block ml-4">{item.label}</span>
-              </button>
-            </li>
-          ))}
+          {navItems.map((item) => {
+            const path = `/${item.id}`;
+            const isActive = location.pathname === path || (location.pathname === '/' && item.id === 'dashboard');
+            return (
+              <li key={item.id}>
+                <Link
+                  to={path}
+                  className={`flex items-center w-full p-3 my-1 rounded-lg transition-all duration-200 group relative ${
+                    isActive
+                      ? 'bg-primary/10 text-primary font-semibold'
+                      : 'text-textSecondary hover:bg-white/5 hover:text-textPrimary'
+                  }`}
+                >
+                  <div className={`absolute left-0 top-0 h-full w-1 rounded-r-full bg-primary transition-transform duration-300 scale-y-0 group-hover:scale-y-100 ${isActive ? 'scale-y-100' : ''}`}></div>
+                  {item.icon}
+                  <span className="hidden md:block ml-4">{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
        <div className="px-2 md:px-4 py-4 border-t border-border">

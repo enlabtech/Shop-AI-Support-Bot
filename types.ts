@@ -1,6 +1,4 @@
 
-export type View = 'dashboard' | 'inbox' | 'orders' | 'knowledge' | 'settings';
-
 export interface Message {
   id: number;
   text: string;
