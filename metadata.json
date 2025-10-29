@@ -1,0 +1,5 @@
+{
+  "name": "ShopAI - AI Customer Service Bot",
+  "description": "A dashboard for an AI-powered customer service chatbot for Bangladeshi Facebook Pages. It helps manage conversations, orders, and the bot's knowledge base to automate responses and improve sales.",
+  "requestFramePermissions": []
+}
