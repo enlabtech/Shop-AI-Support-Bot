@@ -18,6 +18,11 @@ const App: React.FC = () => {
 
   const handleLogin = () => {
     setIsAuthenticated(true);
+    setCurrentView('dashboard');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
   };
 
   const renderView = () => {
@@ -43,7 +48,7 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-background text-textPrimary font-sans">
-      <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
+      <Sidebar currentView={currentView} setCurrentView={setCurrentView} onLogout={handleLogout} />
       <main key={currentView} className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 animate-fade-in">
         {renderView()}
       </main>

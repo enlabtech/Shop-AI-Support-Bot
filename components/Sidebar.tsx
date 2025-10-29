@@ -6,13 +6,15 @@ import OrdersIcon from './icons/OrdersIcon';
 import KnowledgeIcon from './icons/KnowledgeIcon';
 import SettingsIcon from './icons/SettingsIcon';
 import BotIcon from './icons/BotIcon';
+import LogoutIcon from './icons/LogoutIcon';
 
 interface SidebarProps {
   currentView: View;
   setCurrentView: (view: View) => void;
+  onLogout: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView, onLogout }) => {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: <HomeIcon /> },
     { id: 'inbox', label: 'Inbox', icon: <InboxIcon /> },
@@ -49,6 +51,15 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView }) => {
           ))}
         </ul>
       </nav>
+       <div className="px-2 md:px-4 py-4 border-t border-border">
+           <button
+             onClick={onLogout}
+             className="flex items-center w-full p-3 my-1 rounded-lg text-textSecondary hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 group"
+           >
+             <LogoutIcon />
+             <span className="hidden md:block ml-4">Logout</span>
+           </button>
+       </div>
       <div className="p-4 border-t border-border">
           <div className="flex items-center">
               <img src="https://picsum.photos/seed/admin/40/40" alt="Admin" className="w-10 h-10 rounded-full border-2 border-primary" />
